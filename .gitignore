@@ -1,0 +1,21 @@
+# Ambiente Virtual do Python
+.venv/
+venv/
+env/
+ENV/
+
+# Arquivos temporários e compilações do Python
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Banco de dados local de desenvolvimento (SQLite)
+*.db
+*.sqlite3
+
+# Arquivos de configuração do VS Code e do sistema operacional
+.vscode/
+.DS_Store
+Thumbs.db
