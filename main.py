@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.database import create_db_and_tables
-from app.routers import castas
+from app.routers import castas, vinhedos, parcelas, plantios
 
 app = FastAPI(
     title="Winery System ERP",
@@ -13,6 +13,9 @@ def on_startup():
     create_db_and_tables()
 
 app.include_router(castas.router)
+app.include_router(vinhedos.router)
+app.include_router(parcelas.router)
+app.include_router(plantios.router)
 
 @app.get("/")
 def read_root():
