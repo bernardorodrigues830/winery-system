@@ -1,5 +1,7 @@
 from typing import Optional, List
 from sqlmodel import Field, SQLModel, Relationship
+from enum import Enum as PyEnum
+from datetime import datetime
 
 # ─────────────────────────────────────────
 # CASTA
@@ -94,3 +96,29 @@ class PlantioRead(PlantioBase):
     id: int
     parcela_id: int
     casta_id: int
+
+class NivelAcesso(str, PyEnum):
+    ADMIN = "ADMIN"      
+    OPERADOR = "OPERADOR"  
+    CONSULTA = "CONSULTA"  
+
+class UsuarioBase(SQLModel):
+    nome: str = Field(min_length=2, max_length=100)
+    email: str = Field(unique=True, max_length=200)
+    nivel: NivelAcesso = Field(default=NivelAcesso.OPERADOR)
+    ativo: bool = Field(default=True)
+
+class Usuario(UsuarioBase, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    senha_hash: str 
+    criado_em: datetime = Field(default_factory=datetime.utcnow)
+
+class UsuarioCreate(SQLModel):
+    nome: str
+    email: str
+    senha: str 
+    nivel: NivelAcesso = NivelAcesso.OPERADOR
+
+class UsuarioRead(UsuarioBase):
+    id: int
+    criado_em: datetime 
